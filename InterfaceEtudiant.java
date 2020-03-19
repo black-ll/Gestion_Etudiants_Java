@@ -111,7 +111,7 @@ public class InterfaceEtudiant extends JFrame {
 		lblNewLabel_2.setBounds(199, 44, 56, 16);
 		panel.add(lblNewLabel_2);
 		
-		JComboBox comboBoxFiliere = new JComboBox();
+		JComboBox<String> comboBoxFiliere = new JComboBox<String>();
 		comboBoxFiliere.setBounds(315, 90, 100, 22);
 		panel.add(comboBoxFiliere);
 		comboBoxFiliere.setModel(new DefaultComboBoxModel<String>(new String[] {"Technique", "Scientifique", "Littéraire", "Informatique", "Architecture"}));
@@ -168,19 +168,25 @@ public class InterfaceEtudiant extends JFrame {
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				
-				// On récupère les valeurs de la colonne id ds la var id
-				int id = Integer.parseInt(tableEtudiants.getValueAt(tableEtudiants.getSelectedRow(), 0) + "");
-				
-				// on supprimme la ligne de notre EtudiantService etudiants
-				etudiants.delete(etudiants.findById(id));
-				
-				model.removeRow(tableEtudiants.getSelectedRow());
-				
-				// on remet les champs à 0
-				nomInput.setText("");
-				prenomInput.setText("");
-				buttonGroup.clearSelection();
+				 // method pr faire apparaitre un popup de confirmation avant suppression
+				int a = JOptionPane.showConfirmDialog(contentPane, "Are you sure?");  
+				if (a==JOptionPane.YES_OPTION)
+				{  
+					
+					// On récupère les valeurs de la colonne id ds la var id
+					int id = Integer.parseInt(tableEtudiants.getValueAt(tableEtudiants.getSelectedRow(), 0) + "");
+					
+					// on supprimme la ligne de notre EtudiantService etudiants
+					etudiants.delete(etudiants.findById(id));
+					
+					model.removeRow(tableEtudiants.getSelectedRow());
+					
+					// on remet les champs à 0
+					nomInput.setText("");
+					prenomInput.setText("");
+					buttonGroup.clearSelection();
+					
+				}		     
 				
 				System.out.println(etudiants);
 			}
